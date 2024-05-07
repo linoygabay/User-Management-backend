@@ -5,9 +5,9 @@ const usersRoutes = require('./routes/users');
 const healthCheckRoute = require('./routes/healthCheckRoute')
 const connectDB = require('./config/db')
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./config/swagger.json'); 
+const swaggerDocument = require('./config/swagger.json');
+const {PORT, DB_CONNECTION_STRING} = require('./config/constants')
 
-const port = 8080
 const app = express()
 
 app.use(cors());
@@ -18,8 +18,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/users', usersRoutes);
 app.use('/', healthCheckRoute)
 
-connectDB()
+connectDB(DB_CONNECTION_STRING)
 
-app.listen(port, () => {
-    console.log(`http://localhost:${port}`)
+app.listen(PORT, () => {
+    console.log(`http://localhost:${PORT}`)
 })
