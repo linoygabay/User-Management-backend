@@ -3,9 +3,9 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const usersRoutes = require('./routes/users');
 const healthCheckRoute = require('./routes/healthCheckRoute')
-const connectDB = require('./db/index')
+const connectDB = require('./config/db')
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json'); 
+const swaggerDocument = require('./config/swagger.json'); 
 
 const port = 8080
 const app = express()
