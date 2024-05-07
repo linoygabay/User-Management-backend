@@ -1,24 +1,33 @@
-const { findUserById, updateUserGroup } = require('./utils/userUtils');
-const { updateGroupStatus } = require('./utils/groupUtils');
-const { filterUsers } = require('./users')
+const User = require('../models/User');
+const Group = require('../models/Group');
 
 const removeUserFromGroup = async (userId) => {
     try {
-        const user = await findUserById(userId);
+        const group = await getUserGroup(userId);
+        if (!group) return;
 
-        if (!user || !user.group) {
-            return
-        }
-        const group = user.group;
+        await updateUserGroup(userId, { group: "" });
 
-        await updateUserGroup(user, "");
+        await updateGroupStatusIfEmpty(group);
+    } catch (error) {
+        console.error(error);
+    }
+};
 
-        const remainingUsers = await filterUsers({ group });
-        if (remainingUsers.length === 0) {
-            await updateGroupStatus(group, 'Empty');
-        }
-    } catch (err) {
-        console.log(err)
+const getUserGroup = async (userId) => {
+    const { group } = await User.findById(userId);
+    return group;
+};
+
+const updateUserGroup = async (userId, updateData) => {
+    await User.findByIdAndUpdate(userId, updateData);
+};
+
+const updateGroupStatusIfEmpty = async (groupName) => {
+    const remainingUsersInGroup = await User.find({ group: groupName });
+
+    if (remainingUsersInGroup.length === 0) {
+        await Group.findOneAndUpdate({ groupName }, { status: "empty" });
     }
 };
 
