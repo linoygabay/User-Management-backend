@@ -5,7 +5,7 @@ const getAllUsers = async ({ limit = 10, offset = 0 }) => {
         const users = await User.find().limit(parseInt(limit)).skip(parseInt(offset))
         return users;
     } catch (err) {
-        throw err;
+        console.log(err);
     }
 };
 
@@ -14,7 +14,7 @@ const filterUsers = async (filterCriteria) => {
         const users = await User.find(filterCriteria)
         return users;
     } catch (err) {
-        throw err;
+        console.log(err);
     }
 };
 
@@ -28,7 +28,7 @@ const updateUsersStatus = async (users) => {
         }));
         await User.bulkWrite(bulkOps);
     } catch (err) {
-        throw err;
+        console.log(err);
     }
 };
 
