@@ -1,0 +1,238 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "User Management API",
+    "version": "1.0.0",
+    "description": "API for managing users"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "summary": "Get all users",
+        "operationId": "getAllUsers",
+        "responses": {
+          "200": {
+            "description": "A list of users",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "_id": "663a0909148f7d6f1df70315",
+                    "name": "Neta co",
+                    "email": "neta@example.com",
+                    "status": "active",
+                    "group": "",
+                    "__v": 0
+                  },
+                  {
+                    "_id": "663a0909148f7d6f1df70316",
+                    "name": "Maya",
+                    "email": "maya@example.com",
+                    "status": "pending",
+                    "group": "art",
+                    "__v": 0
+                  },
+                  {
+                    "_id": "663a0909148f7d6f1df70317",
+                    "name": "Noy",
+                    "email": "noy@example.com",
+                    "status": "blocked",
+                    "group": "football",
+                    "__v": 0
+                  },
+                  {
+                    "_id": "663a1d7851a1bdb47fc2471a",
+                    "name": "Linoy GAABAY",
+                    "email": "linoy@example.com",
+                    "status": "active",
+                    "group": "football",
+                    "__v": 0
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update user status",
+        "operationId": "updateUsersStatus",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User status updated successfully"
+          }
+        }
+      }
+    },
+    "/users/filterByName": {
+      "get": {
+        "summary": "Filter users by name",
+        "operationId": "filterUsersByName",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Name to filter users by",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of users matching the name",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "_id": "663a0909148f7d6f1df70317",
+                    "name": "Noy",
+                    "email": "noy@example.com",
+                    "status": "blocked",
+                    "group": "football",
+                    "__v": 0
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/filterByEmail": {
+      "get": {
+        "summary": "Filter users by email",
+        "operationId": "filterUsersByEmail",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "description": "Email to filter users by",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of users matching the email",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "_id": "663a1d7851a1bdb47fc2471a",
+                    "name": "Linoy GAABAY",
+                    "email": "linoy@example.com",
+                    "status": "active",
+                    "group": "football",
+                    "__v": 0
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{userId}/removeFromGroup": {
+      "put": {
+        "summary": "Remove user from group",
+        "operationId": "removeUserFromGroup",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of the user to remove from group",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User removed from group successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "User removed from group successfully"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Health check endpoint",
+        "operationId": "healthCheck",
+        "responses": {
+          "200": {
+            "description": "Health check status",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": "Up"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "group": {
+            "type": "string"
+          },
+          "__v": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  }
+}
