@@ -60,6 +60,7 @@
           }
         }
       },
+      
       "put": {
         "summary": "Update user status",
         "operationId": "updateUsersStatus",

@@ -8,5 +8,4 @@ router.get('/filterByEmail', UserController.filterUsersByEmail);
 router.put('/updateStatus', UserController.updateUsersStatus);
 router.put('/:userId/removeFromGroup', UserController.removeUserFromGroup);
 
-
 module.exports = router;

@@ -1,10 +1,13 @@
 const mongoose = require('mongoose');
 
 const groupSchema = new mongoose.Schema({
-    groupName: String,
-    status: {
-        type: String,
-    }
+  groupName: String,
+  status: {
+    type: String,
+    enum: ['empty', 'notEmpty'],
+  },
 });
 
-module.exports = mongoose.model('Group', groupSchema);
+const Group = mongoose.model('Group', groupSchema);
+
+module.exports = Group;

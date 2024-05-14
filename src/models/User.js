@@ -1,15 +1,22 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-    name: String,
-    email: String,
-    status: {
-        type: String,
-        enum: ['pending', 'active', 'blocked']
-    },
-    group: {
-        type: String,
-    }
+  name: String,
+  email: {
+    type: String,
+    unique: true,
+  },
+  status: {
+    type: String,
+    enum: ['pending', 'active', 'blocked'],
+    index: true
+  },
+  group: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Group',
+  },
 });
 
-module.exports = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
+
+module.exports = User;
